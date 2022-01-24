@@ -1,7 +1,6 @@
 ---
 layout: post
-title: "[Swift] 기초 문법 정리 - 들어가며"
-subtitle: "들어가며"
+title: "[Swift] 기초 문법 정리 - 개요"
 header-style: text
 sitemap:
   changefreq: daily
@@ -39,7 +38,7 @@ tags:
 
 ## Reference
 
-1. 오브젝티브-C(영어: Objective-C)는 C 프로그래밍 언어에 스몰토크 스타일의 메시지 구문을 추가한 객체 지향 언어이다.<a id="ref1">[Objective-C - 위키피디아](https://ko.wikipedia.org/wiki/오브젝티브-C)</a>
+1. 오브젝티브-C(영어: Objective-C)는 C 프로그래밍 언어에 스몰토크 스타일의 메시지 구문을 추가한 객체 지향 언어이다. <a id="ref1">[Objective-C - 위키피디아](https://ko.wikipedia.org/wiki/오브젝티브-C)</a>
 
 2. LLVM(Low Level Virtual Machine)은 컴파일러의 기반구조이다. 프로그램을 컴파일 타임, 링크 타임, 런타임 상황에서 프로그램의 작성 언어에 상관없이 최적화를 쉽게 구현할 수 있도록 구성되어 있다. <a id="ref2">[LLVM - 위키피디아](https://ko.wikipedia.org/wiki/LLVM)</a>
 
