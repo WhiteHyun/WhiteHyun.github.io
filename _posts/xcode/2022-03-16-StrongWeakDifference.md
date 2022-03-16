@@ -25,7 +25,7 @@ tags:
 변수를 strong과 weak으로 세팅하게 되면, weak은 키워드가 들어가지만 strong은 키워드 없이 선언되는 것을 볼 수 있습니다.
 대체 어떤 효과를 지녔길래, 이렇게 두 가지 기능으로 분류해놓은걸까요?
 
-![connection](/img/in-post/iOS/StrongWeak/variables.png){: .align-center}
+![variables](/img/in-post/iOS/StrongWeak/variables.png){: .align-center}
 
 ## Strong과 Weak에 관해
 
@@ -52,6 +52,7 @@ class ViewController: UIViewController {
         // 버튼 설정
         let button = UIButton()
         button.setTitle("Go to other View", for: .normal)
+        button.setTitleColor(.tintColor, for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 200, height: 50)
         button.center = view.center
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
@@ -93,6 +94,8 @@ class SecondVC: UIViewController {
 ```
 
 실행하게 되면 첫 화면에는 가운데에 버튼하나가 놓여져있을 거고, 누르게 된다면 두 번째 뷰 컨트롤러를 보여주게 될 것입니다.
+
+![test](/img/in-post/iOS/StrongWeak/test-view.gif){: .align-center width="30%" height="30%"}
 
 그리고 두 번째 뷰 컨트롤러는 MyView라는 프로퍼티를 가짐과 동시에, MyView는 SecondVC라는 프로퍼티를 가지고 초기화되기 때문에 **상호참조**되어있음을 알 수 있습니다.
 그래서 버튼을 눌러 SecondVC를 present하고, dismiss하게되면 두 클래스는 메모리를 회수할 수 없게 된 채 사라지게 됩니다. 이러한 사이클을 유지한다면, **메모리 누수가 이어지게 되는 것입니다.**
@@ -149,4 +152,4 @@ class MyView: UIView {
 ```
 
 이렇게 된다면 영원히 메모리에서 제거되지 않는 코드가 시스템에 의해 임의로 제거가 되어 상호 참조로부터 벗어날 수 있습니다.  
-이렇듯, 상호참조가 일어날 경우를 대비하여 weak을 적절하게 사용해야겠네요.
+이렇듯, 상호참조가 일어날 경우를 대비하여 weak을 적절하게 사용해야겠습니다.
