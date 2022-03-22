@@ -29,9 +29,9 @@ Objective-C로 이루어진 프로젝트를 먼저 살펴보자면, Objective-C�
 
 > UIApplication 객체는 앱 그 자체라고 봐도 무방합니다. UIApplication에 대한 설명은 Apple 공식문서를 참조하거나<sup>[[1]](#ref1)</sup> 추후에 글을 작성하도록 하곘습니다.
 
-Swift는 C언어 기반으로 구성된 언어가 아닙니다. 따라서 main.m 파일은 존재하지 않으며 엔트리 포인트 또한 존재하지 않습니다. 하지만 objective-C 프로젝트에서 보았듯, main함수에서 AppDelegate클래스를 이용하여 UIApplication 객체를 생성하였습니다. 따라서 Swift 프로젝트 또한 관련 파일 내에 무언가의 장치를 마련했을 거라 생각할 수 있습니다.
+Swift는 C언어 기반으로 구성된 언어가 아닙니다. 따라서 main.m 파일은 존재하지 않으며 엔트리 포인트 또한 존재하지 않습니다. 하지만 objective-C 프로젝트에서 보았듯, main함수에서 AppDelegate클래스를 이용하여 UIApplication 객체를 생성하였었습니다. 따라서 Swift 프로젝트 또한 관련 파일 내에 무언가의 장치를 마련했을 거라 생각할 수 있습니다.
 
-실제로 swift 프로젝트를 열고 `AppDelegate.swift`를 보면 AppDelegate 클래스 위에 `@main` 이라는 Attribute(또는 Symbol)를 표기하고있는 걸 알 수 있습니다. 이는 **AppDelegate 클래스 내 main함수를 EntryPoint로 지정한다는 의미이며**, main함수 내에서는 AppDelegate 클래스 정보를 전달하여 앱을 실행합니다.
+실제로 swift 프로젝트를 열고 `AppDelegate.swift`를 보면 AppDelegate 클래스 위에 `@main` 이라는 Attribute(또는 Symbol)를 표기하고있는 걸 알 수 있습니다. 이는 **AppDelegate 클래스 내 main함수를 EntryPoint로 지정한다는 의미입니다**.
 
 ![main-swift](/img/in-post/iOS/EntryPoint/main-swift.png){: .align-center}
 
@@ -43,9 +43,12 @@ Swift는 C언어 기반으로 구성된 언어가 아닙니다. 따라서 main.m
 
 즉 `UIApplicationDelegate` 내에는 main함수가 내장되어있고, 해당 함수는 UIKit 앱의 Entry Point로 사용할 수 있도록 합니다.<sup>[[2]](#ref2)</sup> 그리고 시스템은 main() 메서드를 호출, AppDelegate 클래스에서 작성한 커스텀 코드를 델리게이트로 지정하여 앱을 실행하게 됩니다.
 
+<!-- ### Entry Point를 바꿔보자 -->
+<!-- TODO: Entry Point 사용자 지정 설정 -->
+
 ## 결론
 
-swift 프로젝트 내에서는 AppDelegate 클래스를 Entry Point로 잡습니다. 그리고 나서 수행하는 과정은 아래 그림과 같이 일련의 과정을 가집니다.
+swift 프로젝트 내에서는 자동으로 **@main**을 갖고 있는 `AppDelegate` 클래스를 Entry Point로 잡습니다. 그리고 나서 수행하는 과정은 아래 그림과 같이 일련의 과정을 가집니다.
 ![app life-cycle](http://pds20.egloos.com/pds/201010/14/13/a0005913_4cb6651387c28.jpg){: .align-center}
 
 앱의 생명주기, AppDelegate에 관한 내용은 다음 글에서 자세하게 다룰 예정이기 때문에 지금은 엔트리 포인트 개념에 대해서만 짚고 넘어가시면 됩니다.
