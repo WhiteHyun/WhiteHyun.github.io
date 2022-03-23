@@ -31,7 +31,7 @@ Objective-C로 이루어진 프로젝트를 먼저 살펴보자면, Objective-C�
 
 Swift는 C언어 기반으로 구성된 언어가 아닙니다. 따라서 main.m 파일은 존재하지 않으며 엔트리 포인트 또한 존재하지 않습니다. 하지만 objective-C 프로젝트에서 보았듯, main함수에서 AppDelegate클래스를 이용하여 UIApplication 객체를 생성하였었습니다. 따라서 Swift 프로젝트 또한 관련 파일 내에 무언가의 장치를 마련했을 거라 생각할 수 있습니다.
 
-실제로 swift 프로젝트를 열고 `AppDelegate.swift`를 보면 AppDelegate 클래스 위에 `@main` 이라는 Attribute(또는 Symbol)를 표기하고있는 걸 알 수 있습니다. 이는 **AppDelegate 클래스 내 main함수를 EntryPoint로 지정한다는 의미입니다**.
+실제로 swift 프로젝트를 열고 `AppDelegate.swift`를 보면 AppDelegate 클래스 위에 `@main`이라는 어노테이션을 표기하고있는 걸 알 수 있습니다. 이는 **AppDelegate 클래스 내 main함수를 EntryPoint로 지정한다는 의미입니다**.
 
 ![main-swift](/img/in-post/iOS/EntryPoint/main-swift.png){: .align-center}
 
