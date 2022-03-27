@@ -56,7 +56,7 @@ protocol ProvidesMain {
 
 Appdelegate 클래스 위에 main annotation이 있으므로 해당 클래스의 main함수를 **EntryPoint로 지정한다는 의미이며**, 보여지는 main 함수가 없기 때문에 사전에 구현되어있는 프로토콜을 Appdelegate 클래스가 준수하고 있는 것을 알 수 있습니다.
 
-Appdelegate 클래스는 UIResponder라는 클래스를 상속받고, UIApplicationDelegate를 준수하고 있기 때문에 `UIApplicationDelegate` 내부에 main함수가 내장되어있음을 예상할 수 있으며, 해당 프로토콜은 UIKit 프레임워크에 속해있기 때문에 앱 제어권이 자연스레 UIKit 프레임워크로 이관되게 됩니다.<sup>[[2]](#ref2)</sup> 그렇게해서 시스템은 main() 메서드를 호출하고 AppDelegate 클래스에서 작성한 커스텀 코드를 델리게이트로 지정하여 앱을 실행하게 되기 때문에 정상적으로 잘 작동될 수 있었던 것입니다.
+Appdelegate 클래스는 UIResponder라는 클래스를 상속받고, UIApplicationDelegate를 준수하고 있기 때문에 `UIApplicationDelegate` 내부에 main함수가 내장되어있음을 예상할 수 있으며, 해당 프로토콜은 UIKit 프레임워크에 속해있기 때문에 앱 제어권은 자연스레 UIKit 프레임워크로 이관되게 됩니다.<sup>[[2]](#ref2)</sup> 그렇게해서 시스템은 main() 메서드를 호출하고 AppDelegate 클래스에서 작성한 커스텀 코드를 델리게이트로 지정하여 앱을 실행하게 되기 때문에 정상적으로 잘 작동될 수 있었던 것입니다.
 
 _<!-- ### Entry Point를 바꿔보자 -->_
 
@@ -66,7 +66,7 @@ _<!-- TODO: Entry Point 사용자 지정 설정 -->_
 
 `@main`에 해당하는 클래스나 구조체나 열거형의 main함수가 entry point로 잡힌다.
 
-iOS 프로젝트의 경우 Appdelegate를 델리게이트로 하여 앱이 작동된다.
+iOS 프로젝트의 경우 Appdelegate를 Entry point로 하여금 델리게이트로도 설정하여 앱을 구동한다.
 
 ## References
 
