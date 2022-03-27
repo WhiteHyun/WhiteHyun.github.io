@@ -6,7 +6,7 @@ sitemap:
   changefreq: daily
   priority: 1.0
 tags:
-  - Swift
+  - iOS
 ---
 
 ## Goal
