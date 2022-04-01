@@ -54,8 +54,3 @@ func bubbleSort(array: [Int]) -> [Int] {
 print(bubbleSort(array: [4, 3, 8, 9, 2, 7, 1, 5, 6]))
 // Prints "[1, 2, 3, 4, 5, 6, 7, 8, 9]"
 ```
-
-## References
-
-1. <a id="ref1">[UIApplicationMain(_:_:_:_:) | Apple Developer Documentation](https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain)</a>
-2. <a id="ref2">[main() | Apple Developer Documentation](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/3656306-main)</a>
