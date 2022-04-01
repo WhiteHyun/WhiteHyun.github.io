@@ -50,9 +50,7 @@ func bubbleSort(array: [Int]) -> [Int] {
   for i in 0..<sequence.count {
     for j in 1..<sequence.count - i {
       if sequence[j-1] > sequence[j] {
-        let temp = sequence[j-1]
-        sequence[j-1] = sequence[j]
-        sequence[j] = temp
+        sequence.swapAt(j, j-1)
       }
     }
   }
