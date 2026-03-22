@@ -1,5 +1,25 @@
-_site/
-.sass-cache/
-.jekyll-cache/
-.jekyll-metadata
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# misc
 .DS_Store
+*.pem
+
+# ide
+.idea
+.vscode
+
+# debug
+npm-debug.log*
+
+# local env files
+.env
+.env.local
+.env.build
+.env.development.local
+.env.test.local
+.env.production.local
