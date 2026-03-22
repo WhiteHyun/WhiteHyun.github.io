@@ -53,8 +53,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, resolve
     const protocol = req.headers['x-forwarded-proto'] || 'http'
     const myOrigin = `${protocol}://${host}`
 
+    // Only rewrite the Notion site domain, NOT www.notion.so
+    // (rewriting notion.so breaks login/auth redirects)
     html = html.replaceAll('https://whitehyun.notion.site', myOrigin)
-    html = html.replaceAll('https://www.notion.so', myOrigin)
     html = html.replaceAll('whitehyun.notion.site', host)
 
     // Inject custom CSS to hide Notion chrome
