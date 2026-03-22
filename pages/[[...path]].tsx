@@ -48,15 +48,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, resolve
 
     let html = await response.text()
 
-    // Rewrite Notion site URLs to our domain
-    const host = req.headers.host || 'localhost:3000'
-    const protocol = req.headers['x-forwarded-proto'] || 'http'
-    const myDomain = `${protocol}://${host}`
-
-    html = html.replaceAll('https://whitehyun.notion.site', myDomain)
-    html = html.replaceAll('whitehyun.notion.site', host)
-
-    // Inject custom CSS before </head>
+    // Don't rewrite Notion URLs - let client JS call Notion API directly
+    // Only inject custom CSS to hide Notion chrome
     html = html.replace(
       '</head>',
       `<style>${CUSTOM_CSS}</style></head>`
