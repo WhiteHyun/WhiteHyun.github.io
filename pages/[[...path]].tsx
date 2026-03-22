@@ -1,6 +1,7 @@
 import { GetServerSideProps } from 'next'
 
 const NOTION_SITE = 'https://whitehyun.notion.site'
+const NOTION_SO = 'https://www.notion.so'
 const ROOT_PAGE_ID = '0d637334ef66431eb8fb0ccd5e756583'
 
 // Custom CSS to inject - hides Notion UI chrome
@@ -25,10 +26,69 @@ const CUSTOM_CSS = `
   .notion-scroller { padding-top: 0 !important; }
 `
 
+function getMyOrigin(req: any) {
+  const host = req.headers.host || 'localhost:3000'
+  const protocol = req.headers['x-forwarded-proto'] || 'http'
+  return { host, origin: `${protocol}://${host}` }
+}
+
+function rewriteDomains(body: string, host: string, origin: string) {
+  return body
+    .replaceAll('https://whitehyun.notion.site', origin)
+    .replaceAll('whitehyun.notion.site', host)
+    .replaceAll('https://www.notion.so', origin)
+    .replaceAll('www.notion.so', host)
+    .replaceAll('https://notion.so', origin)
+    .replaceAll('notion.so', host)
+}
+
 export const getServerSideProps: GetServerSideProps = async ({ req, res, resolvedUrl }) => {
+  const { host, origin } = getMyOrigin(req)
+
   try {
-    // Map root to the database page
-    const notionPath = resolvedUrl === '/' ? `/${ROOT_PAGE_ID}` : resolvedUrl
+    const pathname = resolvedUrl.split('?')[0]
+
+    // --- JS bundle proxy: /_assets/*.js or /app/*.js ---
+    if ((pathname.startsWith('/_assets') || pathname.startsWith('/app')) && pathname.endsWith('.js')) {
+      const jsUrl = `${NOTION_SO}${pathname}`
+      const response = await fetch(jsUrl)
+      if (!response.ok) {
+        res.statusCode = response.status
+        res.end()
+        return { props: {} }
+      }
+      let js = await response.text()
+      // Key: rewrite domain references in JS bundles (like Fruition)
+      js = rewriteDomains(js, host, origin)
+
+      res.setHeader('Content-Type', 'application/javascript; charset=utf-8')
+      res.setHeader('Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=604800')
+      res.write(js)
+      res.end()
+      return { props: {} }
+    }
+
+    // --- CSS/other asset proxy from Notion ---
+    if (pathname.startsWith('/_assets') || pathname.startsWith('/app') || pathname.endsWith('.css')) {
+      const assetUrl = `${NOTION_SO}${pathname}`
+      const response = await fetch(assetUrl)
+      if (!response.ok) {
+        res.statusCode = response.status
+        res.end()
+        return { props: {} }
+      }
+      const contentType = response.headers.get('content-type') || 'application/octet-stream'
+      const buffer = Buffer.from(await response.arrayBuffer())
+
+      res.setHeader('Content-Type', contentType)
+      res.setHeader('Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=604800')
+      res.write(buffer)
+      res.end()
+      return { props: {} }
+    }
+
+    // --- HTML page proxy ---
+    const notionPath = pathname === '/' ? `/${ROOT_PAGE_ID}` : pathname
     const notionUrl = `${NOTION_SITE}${notionPath}`
 
     const response = await fetch(notionUrl, {
@@ -48,23 +108,15 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, resolve
 
     let html = await response.text()
 
-    // Rewrite Notion URLs so client JS calls our proxy instead of Notion directly
-    const host = req.headers.host || 'localhost:3000'
-    const protocol = req.headers['x-forwarded-proto'] || 'http'
-    const myOrigin = `${protocol}://${host}`
+    // Rewrite all Notion domain references
+    html = rewriteDomains(html, host, origin)
 
-    // Only rewrite the Notion site domain, NOT www.notion.so
-    // (rewriting notion.so breaks login/auth redirects)
-    html = html.replaceAll('https://whitehyun.notion.site', myOrigin)
-    html = html.replaceAll('whitehyun.notion.site', host)
+    // Inject custom CSS
+    html = html.replace('</head>', `<style>${CUSTOM_CSS}</style></head>`)
 
-    // Inject custom CSS to hide Notion chrome
-    html = html.replace(
-      '</head>',
-      `<style>${CUSTOM_CSS}</style></head>`
-    )
-
-    // Set response headers
+    // Remove Content-Security-Policy that would block our modifications
+    res.removeHeader('Content-Security-Policy')
+    res.removeHeader('X-Content-Security-Policy')
     res.setHeader('Content-Type', 'text/html; charset=utf-8')
     res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')
     res.write(html)
