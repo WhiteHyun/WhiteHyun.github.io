@@ -96,11 +96,11 @@ html, body {
   padding: 24px 22px !important;
 }
 
-/* 코드 블록 텍스트: Notion 정확한 스타일 */
+/* 코드 블록 텍스트: Notion 정확한 스타일 (16px/24px) */
 .notion-code code {
   font-family: SFMono-Regular, Menlo, Consolas, "PT Mono",
     "Liberation Mono", Courier, monospace !important;
-  font-size: 85% !important;
+  font-size: 16px !important;
   line-height: 24px !important;
   tab-size: 2 !important;
   white-space: break-spaces !important;
@@ -194,6 +194,7 @@ html, body {
 .notion-link-mention-provider {
   color: #7d7a75;
   margin-inline-end: 0.3em;
+  font-size: inherit !important;
 }
 
 .notion-link-mention-title {
@@ -202,6 +203,7 @@ html, body {
   text-decoration-color: #37352f40;
   text-underline-offset: 10%;
   font-weight: 500;
+  font-size: inherit !important;
 }
 
 /* 다크모드 링크 멘션 */
