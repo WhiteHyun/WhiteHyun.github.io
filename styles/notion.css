@@ -94,13 +94,14 @@ html, body {
   background: #42230308 !important;
   border-radius: 10px !important;
   padding: 24px 22px !important;
+  font-size: 16px !important; /* 기준 크기: code에서 85%의 기준 */
 }
 
-/* 코드 블록 텍스트: Notion 정확한 스타일 (16px/24px) */
+/* 코드 블록 텍스트: Notion 정확한 스타일 (85% of 16px = 13.6px) */
 .notion-code code {
   font-family: SFMono-Regular, Menlo, Consolas, "PT Mono",
     "Liberation Mono", Courier, monospace !important;
-  font-size: 16px !important;
+  font-size: 85% !important;
   line-height: 24px !important;
   tab-size: 2 !important;
   white-space: break-spaces !important;
