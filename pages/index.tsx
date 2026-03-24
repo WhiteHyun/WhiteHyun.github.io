@@ -1,8 +1,10 @@
 import type { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import Head from 'next/head'
+import { useState } from 'react'
 import { getDatabasePosts, type PostMeta } from '../lib/notion'
-import { useDarkMode } from '../lib/useDarkMode'
+
+const POSTS_PER_PAGE = 20
 
 interface Props {
   posts: PostMeta[]
@@ -14,7 +16,9 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
 }
 
 export default function Home({ posts }: Props) {
-  const isDark = useDarkMode()
+  const [page, setPage] = useState(0)
+  const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE)
+  const visiblePosts = posts.slice(page * POSTS_PER_PAGE, (page + 1) * POSTS_PER_PAGE)
 
   return (
     <>
@@ -23,34 +27,18 @@ export default function Home({ posts }: Props) {
         <meta name="description" content="WhiteHyun의 기술 블로그" />
       </Head>
 
-      <div style={{
-        maxWidth: 720,
-        margin: '0 auto',
-        padding: '40px 20px',
-        color: isDark ? '#fff' : '#000',
-        backgroundColor: isDark ? '#191919' : '#fff',
-        minHeight: '100vh',
-      }}>
-        <h1 style={{ fontSize: 32, fontWeight: 700, marginBottom: 40 }}>
-          WhiteHyun Blog
-        </h1>
+      <div className="blog-home">
+        <h1 className="blog-home-title">WhiteHyun Blog</h1>
 
         <div>
-          {posts.map((post) => (
-            <article key={post.id} style={{ marginBottom: 32 }}>
-              <Link
-                href={`/post/${post.id}`}
-                style={{ textDecoration: 'none', color: 'inherit' }}
-              >
-                <h2 style={{ fontSize: 20, fontWeight: 600, marginBottom: 4 }}>
-                  {post.title}
-                </h2>
+          {visiblePosts.map((post) => (
+            <article key={post.id} className="blog-post-item">
+              <Link href={`/post/${post.id}`} className="blog-post-link">
+                <h2 className="blog-post-title">{post.title}</h2>
                 {post.description && (
-                  <p style={{ color: isDark ? '#999' : '#666', fontSize: 14, marginBottom: 4 }}>
-                    {post.description}
-                  </p>
+                  <p className="blog-post-desc">{post.description}</p>
                 )}
-                <div style={{ display: 'flex', gap: 12, alignItems: 'center', fontSize: 13, color: isDark ? '#666' : '#999' }}>
+                <div className="blog-post-meta">
                   <span>
                     {new Date(post.date).toLocaleDateString('ko-KR', {
                       year: 'numeric',
@@ -66,6 +54,28 @@ export default function Home({ posts }: Props) {
             </article>
           ))}
         </div>
+
+        {totalPages > 1 && (
+          <div className="blog-pagination">
+            <button
+              onClick={() => setPage(p => p - 1)}
+              disabled={page === 0}
+              className="blog-pagination-btn"
+            >
+              ← 이전
+            </button>
+            <span className="blog-pagination-info">
+              {page + 1} / {totalPages}
+            </span>
+            <button
+              onClick={() => setPage(p => p + 1)}
+              disabled={page >= totalPages - 1}
+              className="blog-pagination-btn"
+            >
+              다음 →
+            </button>
+          </div>
+        )}
       </div>
     </>
   )
