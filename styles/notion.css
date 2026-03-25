@@ -92,9 +92,8 @@ html, body {
    ============================================ */
 /* 코드 블록 외부 컨테이너:
    Notion: 블록 8px 패딩(배경 바깥) + 내부 24px+12px 세로, 22px 가로 */
-/* Notion 구조: code-block(padding:8px, 투명) > bg(border-radius:10px) > padding(24px 22px) > line-numbers(12px 0)
-   gap: 0 유지 + 텍스트 660px: border 8px transparent + background-clip: padding-box
-   콘텐츠 = 720 - 16(border) - 44(padding) = 660px */
+/* 코드 블록: Notion 동일 구조 (div 기반)
+   외부 8px 투명 간격 + 배경 border-radius 10px + 내부 패딩 */
 .notion-code {
   background: #42230308;
   background-clip: padding-box;
@@ -106,7 +105,19 @@ html, body {
   line-height: 1.5;
 }
 
-/* 코드 블록 텍스트: Notion과 동일하게 line-height 미지정 (상속) */
+/* 코드 블록 텍스트: div 기반, Notion 동일 스타일 */
+.notion-code-text {
+  font-family: SFMono-Regular, Menlo, Consolas, "PT Mono",
+    "Liberation Mono", Courier, monospace;
+  font-size: 85%;
+  tab-size: 2;
+  white-space: break-spaces;
+  word-break: break-all;
+  color: var(--fg-color);
+  min-height: 1em;
+}
+
+/* 기존 pre>code 폴백 (react-notion-x 기본 렌더링 대비) */
 .notion-code code {
   font-family: SFMono-Regular, Menlo, Consolas, "PT Mono",
     "Liberation Mono", Courier, monospace;

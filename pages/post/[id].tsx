@@ -11,9 +11,9 @@ const NotionRenderer = dynamic(
   { ssr: false }
 )
 
-// 코드 하이라이팅
+// 커스텀 코드 블록: <pre> 대신 <div>로 렌더링 (Notion 동일 구조)
 const Code = dynamic(
-  () => import('react-notion-x/build/third-party/code').then((m) => m.Code),
+  () => import('../../components/NotionCode').then((m) => m.Code),
   { ssr: false }
 )
 
