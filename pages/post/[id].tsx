@@ -1,6 +1,6 @@
-import type { GetServerSideProps } from 'next'
+import type { GetStaticProps, GetStaticPaths } from 'next'
 import Head from 'next/head'
-import { getPage } from '../../lib/notion'
+import { getDatabasePosts, getPage } from '../../lib/notion'
 import { NotionRenderer } from '../../components/notion/NotionRenderer'
 import type { ExtendedRecordMap } from 'notion-types'
 
@@ -13,7 +13,13 @@ function mapPageUrl(pageId: string): string {
   return `/post/${pageId}`
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getDatabasePosts()
+  const paths = posts.map((post) => ({ params: { id: post.id } }))
+  return { paths, fallback: false }
+}
+
+export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   const pageId = params?.id as string
 
   try {

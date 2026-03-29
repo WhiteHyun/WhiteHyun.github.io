@@ -1,4 +1,4 @@
-import type { GetServerSideProps } from 'next'
+import type { GetStaticProps } from 'next'
 import Link from 'next/link'
 import Head from 'next/head'
 import { useState } from 'react'
@@ -10,7 +10,7 @@ interface Props {
   posts: PostMeta[]
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async () => {
+export const getStaticProps: GetStaticProps<Props> = async () => {
   const posts = await getDatabasePosts()
   return { props: { posts } }
 }

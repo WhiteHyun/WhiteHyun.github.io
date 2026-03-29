@@ -9,10 +9,10 @@ export default defineConfig({
     screenshot: 'only-on-failure',
   },
   webServer: {
-    command: 'npx next dev --port 3000',
+    command: 'npx serve out -l 3000',
     port: 3000,
     reuseExistingServer: true,
-    timeout: 60_000,
+    timeout: 10_000,
   },
   projects: [
     { name: 'chromium', use: { browserName: 'chromium' } },

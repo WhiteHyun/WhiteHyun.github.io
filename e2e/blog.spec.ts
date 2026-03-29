@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 // 테스트용 페이지 (다양한 블록 타입을 포함)
-const TEST_POST_ID = '330fb6ba493381158ac0d1b8a1b86f7e'
+const TEST_POST_ID = '33e91e41-e8fe-4506-b654-fb6b4039cad2'
 
 test.describe('홈페이지', () => {
   test('게시물 목록이 정상 렌더링된다', async ({ page }) => {
@@ -60,7 +60,7 @@ test.describe('불릿 리스트', () => {
 
 test.describe('번호 리스트', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`/post/330fb6ba4933812b8bc9e08fe80b4b71`)
+    await page.goto(`/post/33e91e41-e8fe-4506-b654-fb6b4039cad2`)
   })
 
   test('최상위 번호가 1. 2. 3. 형식이다', async ({ page }) => {

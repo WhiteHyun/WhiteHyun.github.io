@@ -1,7 +1,7 @@
 import { test, expect, type Page, type Locator } from '@playwright/test'
 
-const TEST_POST_ID = '330fb6ba493381158ac0d1b8a1b86f7e'
-const NUMBERED_LIST_POST_ID = '330fb6ba4933812b8bc9e08fe80b4b71'
+const TEST_POST_ID = '33e91e41-e8fe-4506-b654-fb6b4039cad2'
+const NUMBERED_LIST_POST_ID = '33e91e41-e8fe-4506-b654-fb6b4039cad2'
 
 /** 요소의 computed style 값을 가져오는 헬퍼 */
 async function css(locator: Locator, prop: string): Promise<string> {

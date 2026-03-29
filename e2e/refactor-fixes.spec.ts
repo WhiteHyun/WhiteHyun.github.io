@@ -1,6 +1,6 @@
 import { test, expect, type Locator } from '@playwright/test'
 
-const TEST_POST_ID = '330fb6ba493381158ac0d1b8a1b86f7e'
+const TEST_POST_ID = '33e91e41-e8fe-4506-b654-fb6b4039cad2'
 
 async function css(locator: Locator, prop: string): Promise<string> {
   return locator.evaluate((el, p) => getComputedStyle(el).getPropertyValue(p), prop)
@@ -144,7 +144,7 @@ test.describe('CSS 변수 :root 스코프', () => {
 // ============================================
 test.describe('리스트 내 인라인 링크', () => {
   test('링크가 텍스트와 같은 줄에 인라인으로 표시된다', async ({ page }) => {
-    await page.goto(`/post/330fb6ba-4933-8108-8419-f483a95224b7`)
+    await page.goto(`/post/9f2346f3-ce9a-4c23-a577-c8fc515ae975`)
 
     // 링크를 포함하는 리스트 아이템의 콘텐츠 영역
     const content = page.locator('.notion-list-item-content:has(.notion-link)').first()
