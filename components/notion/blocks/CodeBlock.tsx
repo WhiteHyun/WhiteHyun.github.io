@@ -1,22 +1,21 @@
-import { useRef, useState, useCallback, useEffect } from 'react'
-import { useNotionContext } from 'react-notion-x'
+import { useRef, useState, useCallback } from 'react'
 import { getBlockTitle } from 'notion-utils'
+import type { Block, ExtendedRecordMap } from 'notion-types'
 import copyToClipboard from 'clipboard-copy'
+import { useNotion } from '../NotionContext'
+import { NotionText } from '../NotionText'
+import { getBlockCaption } from '../block-helpers'
 
-export function Code({
-  block,
-  defaultLanguage = 'typescript',
-  className,
-}: {
-  block: any
-  defaultLanguage?: string
-  className?: string
-}) {
+interface Props {
+  block: Block
+}
+
+export function CodeBlock({ block }: Props) {
   const [isCopied, setIsCopied] = useState(false)
   const copyTimeout = useRef<ReturnType<typeof setTimeout>>(undefined)
-  const { recordMap } = useNotionContext()
-  const content = getBlockTitle(block, recordMap)
-  const caption = block.properties?.caption
+  const { recordMap } = useNotion()
+  const content = getBlockTitle(block, recordMap as ExtendedRecordMap)
+  const caption = getBlockCaption(block)
 
   const onClickCopy = useCallback(() => {
     void copyToClipboard(content)
@@ -27,11 +26,7 @@ export function Code({
 
   return (
     <>
-      {/* Notion 동일 구조: div 기반, pre/code 사용하지 않음 */}
-      <div
-        className={`notion-code ${className || ''}`}
-        tabIndex={0}
-      >
+      <div className="notion-code" tabIndex={0}>
         <div className="notion-code-copy">
           <div className="notion-code-copy-button" onClick={onClickCopy}>
             <svg fill="currentColor" viewBox="0 0 16 16" width="1em" version="1.1">
@@ -48,7 +43,9 @@ export function Code({
         <div className="notion-code-text">{content}</div>
       </div>
       {caption && (
-        <figcaption className="notion-asset-caption">{caption}</figcaption>
+        <figcaption className="notion-asset-caption">
+          <NotionText value={caption} />
+        </figcaption>
       )}
     </>
   )
