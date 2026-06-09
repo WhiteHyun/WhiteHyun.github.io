@@ -4,6 +4,10 @@
 /* ============================================
    글로벌: html/body 기본 폰트 지정
    ============================================ */
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont,
@@ -278,7 +282,7 @@ img.notion-page-icon {
 .notion-h4 {
   font-size: 1.25em;
   line-height: 1.3;
-  padding: 22px 8px 8px;
+  padding: 24px 8px 8px;
 }
 
 /* ============================================
@@ -408,10 +412,11 @@ img.notion-page-icon {
   padding: 2px 0 2px 6px;
 }
 
-/* 중첩 리스트: Notion 실제 패딩 (top:2px, bottom:0)
+/* 중첩 리스트: Notion 실제 들여쓰기 (~24px per level)
    specificity 0-3-0으로 연속 그룹 규칙(0-3-0)보다 뒤에 위치하여 우선 */
 .notion-list-item>.notion-list-item-content>.notion-list-item {
   margin-left: 0;
+  padding-left: 0;
   padding-top: 2px;
   padding-bottom: 0;
 }
@@ -431,6 +436,7 @@ img.notion-page-icon {
    ============================================ */
 .notion-callout {
   display: flex;
+  align-items: flex-start;
   padding: 12px;
   border-radius: 10px;
   border: 1px solid transparent;
@@ -477,7 +483,6 @@ img.notion-page-icon {
 .notion-callout-icon {
   width: 24px;
   height: 24px;
-  margin-top: 7.5px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -496,6 +501,7 @@ img.notion-page-icon {
   flex: 1;
   min-width: 0;
   margin-left: 8px;
+  padding: 0 8px;
 }
 
 /* ============================================

@@ -18,7 +18,7 @@
     "@notionhq/client": "2.2.15",
     "clipboard-copy": "^4.0.1",
     "katex": "^0.16.40",
-    "next": "^16.2.0",
+    "next": "^16.2.1",
     "notion-client": "^7.10.0",
     "notion-utils": "^7.10.0",
     "react": "^19.2.4",

@@ -12,7 +12,7 @@ interface Props {
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const posts = await getDatabasePosts()
-  return { props: { posts } }
+  return { props: { posts }, revalidate: 86400 }
 }
 
 export default function Home({ posts }: Props) {

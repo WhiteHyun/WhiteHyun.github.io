@@ -22,7 +22,8 @@ export function NotionRenderer({
   mapPageUrl = defaultMapPageUrl,
   className,
 }: NotionRendererProps) {
-  const rootBlock = (Object.values(recordMap.block)[0] as any)?.value
+  const raw = (Object.values(recordMap.block)[0] as any)?.value
+  const rootBlock = raw?.type ? raw : raw?.value
   if (!rootBlock) return null
 
   return (

@@ -9,10 +9,10 @@ export default defineConfig({
     screenshot: 'only-on-failure',
   },
   webServer: {
-    command: 'npx serve out -l 3000',
+    command: 'npm run build && npm start -- -p 3000',
     port: 3000,
     reuseExistingServer: true,
-    timeout: 10_000,
+    timeout: 120_000,
   },
   projects: [
     { name: 'chromium', use: { browserName: 'chromium' } },

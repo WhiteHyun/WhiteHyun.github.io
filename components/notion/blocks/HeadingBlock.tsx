@@ -1,5 +1,4 @@
 import type { Block } from 'notion-types'
-import { uuidToId } from 'notion-utils'
 import { NotionText } from '../NotionText'
 import { getBlockTitle } from '../block-helpers'
 
@@ -11,7 +10,7 @@ interface Props {
 
 export function HeadingBlock({ block, tag: Tag, children }: Props) {
   const title = getBlockTitle(block)
-  const id = uuidToId(block.id)
+  const id = block.id
   const isToggleable = (block.format as any)?.toggleable
 
   const classMap = { h2: 'notion-h2', h3: 'notion-h3', h4: 'notion-h4' }

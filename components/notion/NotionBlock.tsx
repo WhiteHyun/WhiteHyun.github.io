@@ -129,7 +129,9 @@ export function BlockChildren({ block, level = 0 }: { block: Block; level?: numb
 // --- Private ---
 
 function getBlock(recordMap: ExtendedRecordMap, blockId: string): Block | undefined {
-  return (recordMap.block[blockId] as any)?.value
+  const entry = (recordMap.block[blockId] as any)?.value
+  // notion-client가 이중 중첩 구조를 반환하는 경우 처리: { value: Block } vs Block
+  return entry?.type ? entry : entry?.value
 }
 
 function renderChildren(

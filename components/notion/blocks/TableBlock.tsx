@@ -25,8 +25,8 @@ export function TableRowBlock({ block }: TableRowProps) {
   if (!properties) return null
 
   // Get column order from parent table block
-  const parentBlock = recordMap.block[block.parent_id]
-  const parentValue = (parentBlock as any)?.value
+  const parentRaw = (recordMap.block[block.parent_id] as any)?.value
+  const parentValue = parentRaw?.type ? parentRaw : parentRaw?.value
   const columnOrder: string[] = parentValue?.format?.table_block_column_order || []
 
   return (

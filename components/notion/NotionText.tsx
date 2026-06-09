@@ -33,7 +33,7 @@ function renderTextWithBreaks(text: string): React.ReactNode {
   if (!text.includes('\n')) return text
   return text.split('\n').map((line, i, arr) => (
     <Fragment key={i}>
-      {line}
+      {line || '\u00A0'}
       {i < arr.length - 1 && <br />}
     </Fragment>
   ))
@@ -103,7 +103,8 @@ function PageLink({ pageId, children }: { pageId: string; children: React.ReactN
   const { mapPageUrl, recordMap } = useNotion()
 
   // Try to get page title from recordMap
-  const block = (recordMap.block[pageId] as any)?.value
+  const raw = (recordMap.block[pageId] as any)?.value
+  const block = raw?.type ? raw : raw?.value
   const title = block?.properties?.title?.flat()?.join('') || children
 
   return <a className="notion-link" href={mapPageUrl(pageId)}>{title}</a>

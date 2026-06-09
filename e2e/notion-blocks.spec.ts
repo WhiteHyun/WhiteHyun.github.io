@@ -97,7 +97,7 @@ test.describe('제목 블록', () => {
     if (await h4.count() > 0) {
       expect(await css(h4, 'font-size')).toBe('20px') // 16 * 1.25
       expect(await css(h4, 'font-weight')).toBe('600')
-      expect(await css(h4, 'padding-top')).toBe('22px')
+      expect(await css(h4, 'padding-top')).toBe('24px')
     }
   })
 })
@@ -286,26 +286,49 @@ test.describe('콜아웃 레이아웃', () => {
     await page.goto(`/post/${TEST_POST_ID}`)
   })
 
-  test('border-radius: 10px, padding: 12px', async ({ page }) => {
+  test('컨테이너: flex, align-items flex-start, border-radius 10px, padding 12px, border 1px', async ({ page }) => {
     const callout = page.locator('.notion-callout').first()
     if (await callout.count() > 0) {
+      expect(await css(callout, 'display')).toBe('flex')
+      expect(await css(callout, 'align-items')).toBe('flex-start')
       expect(await css(callout, 'border-radius')).toBe('10px')
       expect(await css(callout, 'padding')).toBe('12px')
+      expect(await css(callout, 'border-width')).toBe('1px')
     }
   })
 
-  test('아이콘: 24x24px', async ({ page }) => {
+  test('아이콘: 24x24px, flex-shrink 0, 내부 중앙 정렬', async ({ page }) => {
     const icon = page.locator('.notion-callout-icon').first()
     if (await icon.count() > 0) {
       expect(await css(icon, 'width')).toBe('24px')
       expect(await css(icon, 'height')).toBe('24px')
+      expect(await css(icon, 'flex-shrink')).toBe('0')
+      expect(await css(icon, 'display')).toBe('flex')
+      expect(await css(icon, 'align-items')).toBe('center')
+      expect(await css(icon, 'justify-content')).toBe('center')
     }
   })
 
-  test('콜아웃 텍스트: margin-left 8px', async ({ page }) => {
+  test('아이콘-텍스트 수직 정렬: 동일 top 위치', async ({ page }) => {
+    const callout = page.locator('.notion-callout').first()
+    if (await callout.count() > 0) {
+      const icon = callout.locator('.notion-callout-icon')
+      const text = callout.locator('.notion-callout-text')
+      const iconBox = await icon.boundingBox()
+      const textBox = await text.boundingBox()
+      if (iconBox && textBox) {
+        // 아이콘과 텍스트의 top이 거의 동일 (1px 이내 허용)
+        expect(Math.abs(iconBox.y - textBox.y)).toBeLessThanOrEqual(1)
+      }
+    }
+  })
+
+  test('텍스트: margin-left 8px, padding 좌우 8px', async ({ page }) => {
     const text = page.locator('.notion-callout-text').first()
     if (await text.count() > 0) {
       expect(await css(text, 'margin-left')).toBe('8px')
+      expect(await css(text, 'padding-left')).toBe('8px')
+      expect(await css(text, 'padding-right')).toBe('8px')
     }
   })
 })

@@ -9,14 +9,20 @@ interface Props {
   title: string
 }
 
+function normalizeId(id: string): string {
+  if (id.includes('-')) return id
+  // 8-4-4-4-12 UUID format
+  return `${id.slice(0, 8)}-${id.slice(8, 12)}-${id.slice(12, 16)}-${id.slice(16, 20)}-${id.slice(20)}`
+}
+
 function mapPageUrl(pageId: string): string {
-  return `/post/${pageId}`
+  return `/post/${normalizeId(pageId)}`
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getDatabasePosts()
   const paths = posts.map((post) => ({ params: { id: post.id } }))
-  return { paths, fallback: false }
+  return { paths, fallback: 'blocking' }
 }
 
 export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
@@ -26,11 +32,12 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
     const recordMap = await getPage(pageId)
 
     const blockEntry = Object.values(recordMap.block)[0] as any
-    const block = blockEntry?.value
+    const raw = blockEntry?.value
+    const block = raw?.type ? raw : raw?.value
     const title =
       block?.properties?.title?.flat()?.join('') || 'WhiteHyun Blog'
 
-    return { props: { recordMap, title } }
+    return { props: { recordMap, title }, revalidate: 86400 }
   } catch {
     return { notFound: true }
   }
